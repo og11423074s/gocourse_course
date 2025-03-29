@@ -1,0 +1,17 @@
+github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
+github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/gorilla/mux v1.8.1 h1:TuBL49tXwgrFYWhqrNgrUNEY92u81SPhu7sTdzQEiWY=
+github.com/gorilla/mux v1.8.1/go.mod h1:AKf9I4AEqPTmMytcMc0KkNouC66V3BtZ4qD5fmWSiMQ=
+github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
+github.com/jinzhu/inflection v1.0.0/go.mod h1:h+uFLlag+Qp1Va5pdKtLDYj+kHp5pxUVkryuEj+Srlc=
+github.com/jinzhu/now v1.1.5 h1:/o9tlHleP7gOFmsnYNz3RGnqzefHA47wQpKrrdTIwXQ=
+github.com/jinzhu/now v1.1.5/go.mod h1:d3SSVoowX0Lcu0IBviAWJpolVfI5UJVZZ7cO71lE/z8=
+github.com/og11423074s/go_lib_response v0.0.1/go.mod h1:BPKrNEivS38rbprtrXX9xt/gUmXS1BVGvj6W5cyBkVs=
+github.com/og11423074s/gocourse_domain v0.0.1 h1:mOcKjaWwJ61BY0vqYFwBqMNLQuGafwPPsRD2RF1VHm0=
+github.com/og11423074s/gocourse_domain v0.0.1/go.mod h1:ffLv1jUp1M4RDdDKe0oh2XHwTSRQ4h8l6zVEcIu9uP4=
+github.com/og11423074s/gocourse_meta v0.0.1 h1:Oae6NcCQtdrlkYYG7Uad+7B1qu6Mo3eBPEM+7fTKZyI=
+github.com/og11423074s/gocourse_meta v0.0.1/go.mod h1:iI/MaeXE2raPNjYDAGOAnSBJisRyS28q4scOm3ZmJIg=
+golang.org/x/text v0.23.0 h1:D71I7dUrlY+VX0gQShAThNGHFxZ13dGLBHQLVl1mJlY=
+golang.org/x/text v0.23.0/go.mod h1:/BLNzu4aZCJ1+kcD0DNRotWKage4q2rGVAg4o22unh4=
+gorm.io/gorm v1.25.12 h1:I0u8i2hWQItBq1WfE0o2+WuL9+8L21K9e2HHSTE/0f8=
+gorm.io/gorm v1.25.12/go.mod h1:xh7N7RHfYlNc5EmcI/El95gXusucDrQnHXe0+CgWcLQ=
