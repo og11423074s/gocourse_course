@@ -8,6 +8,8 @@ import (
 var ErrNameRequired = errors.New("name is required")
 var ErrStartDateRequired = errors.New("startDate is required")
 var ErrEndDateRequired = errors.New("endDate is required")
+var ErrInvalidStartDate = errors.New("invalid startDate format")
+var ErrInvalidEndDate = errors.New("invalid endDate format")
 
 type ErrorNotFound struct {
 	CourseID string

@@ -79,9 +79,9 @@ func (r *repo) Get(ctx context.Context, id string) (*domain.Course, error) {
 }
 
 func (r *repo) DeleteById(ctx context.Context, id string) error {
-	user := domain.Course{ID: id}
+	course := domain.Course{ID: id}
 
-	result := r.db.WithContext(ctx).Delete(&user)
+	result := r.db.WithContext(ctx).Delete(&course)
 
 	if result.Error != nil {
 		r.log.Println(result.Error)
@@ -105,13 +105,11 @@ func (r *repo) Update(ctx context.Context, id string, name *string, startDate, e
 	}
 
 	if !startDate.IsZero() {
-		values["start_date"] = startDate
-
+		values["start_date"] = *startDate
 	}
 
 	if !endDate.IsZero() {
-		values["end_date"] = endDate
-
+		values["end_date"] = *endDate
 	}
 
 	result := r.db.WithContext(ctx).Model(&domain.Course{}).Where("id = ?", id).UpdateColumns(values)

@@ -24,13 +24,6 @@ type (
 		EndDate   string `json:"end_date"`
 	}
 
-	Response struct {
-		Status int         `json:"status"`
-		Data   interface{} `json:"data,omitempty"`
-		Error  string      `json:"error,omitempty"`
-		Meta   *meta.Meta  `json:"meta,omitempty"`
-	}
-
 	UpdateReq struct {
 		Name      *string `json:"name"`
 		StartDate *string `json:"start_date"`
@@ -78,6 +71,11 @@ func makeCreateEndpoint(s Service) Controller {
 
 		course, err := s.Create(ctx, req.Name, req.StartDate, req.EndDate)
 		if err != nil {
+
+			if errors.Is(err, ErrInvalidStartDate) || errors.Is(err, ErrInvalidEndDate) {
+				return nil, response.BadRequest(err.Error())
+			}
+
 			return nil, response.InternalServerError(err.Error())
 		}
 
@@ -104,12 +102,12 @@ func makeGetAllEndpoint(s Service, config Config) Controller {
 		metaResult, err := meta.New(req.Page, req.Limit, count, config.LimPageDef)
 
 		if err != nil {
-			return nil, response.BadRequest(err.Error())
+			return nil, response.InternalServerError(err.Error())
 		}
 
 		courses, err := s.GetAll(ctx, filters, metaResult.Offset(), metaResult.Limit())
 		if err != nil {
-			return nil, response.BadRequest(err.Error())
+			return nil, response.InternalServerError(err.Error())
 		}
 
 		return response.OK("success", courses, metaResult), nil
@@ -153,6 +151,10 @@ func makeUpdateEndpoint(s Service) Controller {
 		}
 
 		if err := s.Update(ctx, req.ID, req.Name, req.StartDate, req.EndDate); err != nil {
+
+			if errors.Is(err, ErrInvalidStartDate) || errors.Is(err, ErrInvalidEndDate) {
+				return nil, response.BadRequest(err.Error())
+			}
 
 			if errors.As(err, &ErrorNotFound{}) {
 				return nil, response.NotFound(err.Error())

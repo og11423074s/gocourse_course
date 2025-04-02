@@ -39,13 +39,13 @@ func (s service) Create(ctx context.Context, name, startDate, endDate string) (*
 	startDateParsed, err := time.Parse("2006-01-02", startDate)
 	if err != nil {
 		s.log.Println(err)
-		return nil, err
+		return nil, ErrInvalidStartDate
 	}
 
 	endDateParsed, err := time.Parse("2006-01-02", endDate)
 	if err != nil {
 		s.log.Println(err)
-		return nil, err
+		return nil, ErrInvalidEndDate
 	}
 
 	course := &domain.Course{
@@ -102,7 +102,7 @@ func (s service) Update(ctx context.Context, id string, name, startDate, endDate
 		date, err := time.Parse("2006-01-02", *startDate)
 		if err != nil {
 			s.log.Println(err)
-			return err
+			return ErrInvalidStartDate
 		}
 		startDateParsed = &date
 	}
@@ -111,14 +111,18 @@ func (s service) Update(ctx context.Context, id string, name, startDate, endDate
 		date, err := time.Parse("2006-01-02", *endDate)
 		if err != nil {
 			s.log.Println(err)
-			return err
+			return ErrInvalidEndDate
 
 		}
 		endDateParsed = &date
 
 	}
 
-	return s.repo.Update(ctx, id, name, startDateParsed, endDateParsed)
+	if err := s.repo.Update(ctx, id, name, startDateParsed, endDateParsed); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (s service) Count(ctx context.Context, filters Filters) (int, error) {
