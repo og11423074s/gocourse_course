@@ -1,6 +1,6 @@
 version: '3.5'
 services:
-  go-course-web:
+  go-course-course:
     platform: linux/amd64
     container_name: go-course-course
     build:

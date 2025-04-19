@@ -10,6 +10,7 @@ import (
 	"github.com/og11423074s/go_lib_response/response"
 	"github.com/og11423074s/gocourse_course/internal/course"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -60,6 +61,10 @@ func NewCourseHTTPServer(ctx context.Context, endpoints course.Endpoints) http.H
 
 func decodeGetCourse(_ context.Context, r *http.Request) (interface{}, error) {
 
+	if err := authorization(r.Header.Get("Authorization")); err != nil {
+		return nil, response.Forbidden(err.Error())
+	}
+
 	p := mux.Vars(r)
 	req := course.GetReq{
 		ID: p["id"],
@@ -69,6 +74,11 @@ func decodeGetCourse(_ context.Context, r *http.Request) (interface{}, error) {
 }
 
 func decodeDeleteCourse(_ context.Context, r *http.Request) (interface{}, error) {
+
+	if err := authorization(r.Header.Get("Authorization")); err != nil {
+		return nil, response.Forbidden(err.Error())
+	}
+
 	path := mux.Vars(r)
 	req := course.DeleteReq{
 		ID: path["id"],
@@ -78,6 +88,10 @@ func decodeDeleteCourse(_ context.Context, r *http.Request) (interface{}, error)
 }
 
 func decodeGetAllCourses(_ context.Context, r *http.Request) (interface{}, error) {
+
+	if err := authorization(r.Header.Get("Authorization")); err != nil {
+		return nil, response.Forbidden(err.Error())
+	}
 
 	v := r.URL.Query()
 
@@ -94,6 +108,11 @@ func decodeGetAllCourses(_ context.Context, r *http.Request) (interface{}, error
 }
 
 func decodeUpdateCourse(_ context.Context, r *http.Request) (interface{}, error) {
+
+	if err := authorization(r.Header.Get("Authorization")); err != nil {
+		return nil, response.Forbidden(err.Error())
+	}
+
 	var req course.UpdateReq
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		return nil, response.BadRequest(fmt.Sprintf("invalid request format: %v", err.Error()))
@@ -106,6 +125,11 @@ func decodeUpdateCourse(_ context.Context, r *http.Request) (interface{}, error)
 }
 
 func decodeCreateCourse(_ context.Context, r *http.Request) (interface{}, error) {
+
+	if err := authorization(r.Header.Get("Authorization")); err != nil {
+		return nil, response.Forbidden(err.Error())
+	}
+
 	var req course.CreateReq
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		return nil, response.BadRequest(fmt.Sprintf("invalid request format: %v", err.Error()))
@@ -126,4 +150,11 @@ func encodeError(_ context.Context, err error, w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(r.StatusCode())
 	_ = json.NewEncoder(w).Encode(r)
+}
+
+func authorization(token string) error {
+	if token != os.Getenv("TOKEN") {
+		return response.Unauthorized("invalid token")
+	}
+	return nil
 }
